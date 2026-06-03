@@ -1,11 +1,10 @@
-baseURL = "https://your-blog.pages.dev"
+baseURL = "https://remote-career-blog.pages.dev"
 languageCode = "en-us"
 title = "RemoteCareer AI"
 
 [params]
   description = "Daily insights on remote work, overseas jobs, and career growth."
   author = "RemoteCareer AI"
-  twitterHandle = "@remotecareers"
 
 [sitemap]
   changefreq = "daily"
