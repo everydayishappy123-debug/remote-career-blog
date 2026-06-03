@@ -1,0 +1,41 @@
+name: Daily Auto Post
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # 毎日 06:00 UTC（日本時間 15:00）
+  workflow_dispatch:        # 手動実行も可能
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # リポジトリへのコミットに必要
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Generate article (Batch API)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_post.py
+
+      - name: Commit new post
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add content/posts/
+          git diff --cached --quiet || git commit -m "chore: auto post $(date +'%Y-%m-%d')"
+          git push
+
+  # ── Cloudflare Pages は GitHub 連携で自動ビルド ──
+  # push をトリガーに Cloudflare 側が Hugo ビルド → デプロイ
+  # （Cloudflare Pages ダッシュボードで設定：Build command = hugo, Output = public）

@@ -1,0 +1,17 @@
+baseURL = "https://your-blog.pages.dev"
+languageCode = "en-us"
+title = "RemoteCareer AI"
+theme = "paper"
+
+[params]
+  description = "Daily insights on remote work, overseas jobs, and career growth."
+  author = "RemoteCareer AI"
+  twitterHandle = "@remotecareers"
+
+[sitemap]
+  changefreq = "daily"
+  priority = 0.8
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"

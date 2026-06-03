@@ -1,0 +1,13 @@
+{{ define "main" }}
+<h1>{{ .Site.Title }}</h1>
+<p>{{ .Site.Params.description }}</p>
+<hr>
+{{ range .Pages.ByDate.Reverse }}
+<article style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #eee;">
+  <h2><a href="{{ .Permalink }}" style="text-decoration:none;color:#1a1a1a;">{{ .Title }}</a></h2>
+  <div class="meta">{{ .Date.Format "January 2, 2006" }}</div>
+  <p>{{ .Description }}</p>
+  <a href="{{ .Permalink }}">Read more →</a>
+</article>
+{{ end }}
+{{ end }}

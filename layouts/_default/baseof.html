@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {{/* ── SEO ── */}}
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  {{/* ── OGP（SNS シェア用）── */}}
+  <meta property="og:title"       content="{{ .Title }}">
+  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta property="og:url"         content="{{ .Permalink }}">
+  <meta property="og:type"        content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:site_name"   content="{{ .Site.Title }}">
+
+  {{/* ── Twitter Card ── */}}
+  <meta name="twitter:card"    content="summary">
+  <meta name="twitter:title"   content="{{ .Title }}">
+  <meta name="twitter:site"    content="{{ .Site.Params.twitterHandle }}">
+
+  {{/* ── 構造化データ（Article schema）── */}}
+  {{ if .IsPage }}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ .Title }}",
+    "description": "{{ .Description }}",
+    "datePublished": "{{ .Date.Format "2006-01-02" }}",
+    "author": { "@type": "Organization", "name": "{{ .Site.Params.author }}" },
+    "url": "{{ .Permalink }}"
+  }
+  </script>
+  {{ end }}
+
+  {{/* ── サイトマップは Hugo が自動生成 ── */}}
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+  <style>
+    body { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; font-family: system-ui, sans-serif; line-height: 1.7; color: #1a1a1a; }
+    h1 { font-size: 2rem; line-height: 1.2; margin-bottom: .5rem; }
+    .meta { color: #666; font-size: .9rem; margin-bottom: 2rem; }
+    .tag { background: #f0f0f0; padding: 2px 8px; border-radius: 4px; font-size: .8rem; margin-right: 4px; }
+    nav a { margin-right: 1rem; text-decoration: none; color: #333; }
+    footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid #eee; color: #999; font-size: .85rem; }
+  </style>
+</head>
+<body>
+  <nav><a href="/">{{ .Site.Title }}</a></nav>
+  {{ block "main" . }}{{ end }}
+  <footer>© {{ now.Year }} {{ .Site.Title }} · Powered by Hugo &amp; Cloudflare Pages</footer>
+</body>
+</html>
