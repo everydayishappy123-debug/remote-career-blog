@@ -15,7 +15,7 @@ from pathlib import Path
 
 # ── 設定 ──────────────────────────────────────────────
 CONTENT_DIR = Path("content/posts")
-MODEL = "claude-sonnet-4-20250514"
+MODEL = "claude-sonnet-4-5"
 
 TOPICS = [
     ("Remote Job Trends",        ["remote work", "job search", "career", "2025"]),
